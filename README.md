@@ -1,4 +1,4 @@
-tunnckoCore.github.io
+personal website
 =====================
 
 github pages
