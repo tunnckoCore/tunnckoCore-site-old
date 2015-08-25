@@ -1,19 +1,17 @@
 'use strict'
 
 var fs = require('fs')
-var path = require('path')
 var gulp = require('gulp')
 var rename = require('gulp-rename')
 var cssnano = require('gulp-cssnano')
 var htmlmin = require('gulp-htmlmin')
-var uglifyjs = require('gulp-uglify');
+var uglifyjs = require('gulp-uglify')
 var sourcemaps = require('gulp-sourcemaps')
 var autoprefixer = require('gulp-autoprefixer')
 var inliner = require('html-inline')
-var concat = require('concat-stream')
 
 gulp
-  .task('css', function() {
+  .task('css', function () {
     return gulp.src('src/css/*.css')
       .pipe(sourcemaps.init())
       .pipe(autoprefixer({
@@ -26,7 +24,7 @@ gulp
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('dist/css'))
   })
-  .task('js', function() {
+  .task('js', function () {
     gulp.src('src/js/*.js')
       .pipe(uglifyjs())
       .pipe(rename(function (path) {
@@ -34,7 +32,7 @@ gulp
       }))
       .pipe(gulp.dest('dist/js'))
   })
-  .task('html', ['inline'], function() {
+  .task('html', ['inline'], function () {
     return gulp.src('./dist/index.html')
       .pipe(htmlmin({collapseWhitespace: true}))
       .pipe(gulp.dest('dist'))
