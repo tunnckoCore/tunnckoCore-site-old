@@ -2,6 +2,7 @@
 
 var fs = require('fs')
 var gulp = require('gulp')
+var insert = require('gulp-insert')
 var rename = require('gulp-rename')
 var cssnano = require('gulp-cssnano')
 var htmlmin = require('gulp-htmlmin')
@@ -35,6 +36,7 @@ gulp
   .task('html', ['inline'], function () {
     return gulp.src('./dist/index.html')
       .pipe(htmlmin({collapseWhitespace: true}))
+      .pipe(insert.prepend('<!-- ' + (new Date()) + ' -->'))
       .pipe(gulp.dest('dist'))
   })
   .task('inline', function () {
