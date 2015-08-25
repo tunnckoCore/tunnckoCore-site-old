@@ -1,0 +1,23 @@
+{
+  "name": "tunnckoCore.github.io",
+  "version": "0.0.0",
+  "description": "Charlike Mike Reagent (@tunnckoCore)",
+  "repository": "tunnckoCore/tunnckoCore.github.io",
+  "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "standard && node test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "assertit": "*",
+    "browserify": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-cssnano": "^1.1.0",
+    "gulp-rename": "*",
+    "gulp-sourcemaps": "*",
+    "uglify-js": "*"
+  }
+}
