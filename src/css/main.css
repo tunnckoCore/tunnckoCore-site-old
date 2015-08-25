@@ -1,10 +1,9 @@
-/*!
+/*
  * Component `.im.charlike`
  *
  * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
  */
-@charset 'utf-8';
 
 /**
  * Globals
@@ -33,14 +32,13 @@ body {
 }
 .im.charlike.page {
   background-color: #f54;
-  padding-top: 17rem;
+  padding-top: 14rem;
 }
 
 /**
  * Links
  ************************/
 
-.im.charlike a,
 .im.charlike .link {
   transition: color 0.2s;
   display: inline-block;
@@ -50,7 +48,6 @@ body {
   overflow: hidden;
   color: #efe;
 }
-.im.charlike a:before,
 .im.charlike .link:before {
   transition: all 0.3s;
   transform: scaleX(0);
@@ -61,8 +58,6 @@ body {
   height: 1px;
   content: '';
 }
-.im.charlike a:hover:before,
-.im.charlike a:focus:before,
 .im.charlike .link:hover:before,
 .im.charlike .link:focus:before {
   transform: scaleX(1);
@@ -129,9 +124,12 @@ body {
 .im.charlike.home .title {
   font-size: 2rem;
 }
-.im.charlike.home .logo {
-  width: 5rem;
-  height: 5rem;
+.im.charlike.home .title .url {
+  text-decoration: none;
+  vertical-align: top;
+  position: relative;
+  overflow: hidden;
+  color: #efe;
 }
 .im.charlike.home .short.bio {
   margin-top: 0;
@@ -143,18 +141,16 @@ body {
  ************************/
 
 @media (min-width: 30em) {
-  .im.charlike.page {padding-top: 15rem;}
+  .im.charlike.page {padding-top: 14rem;}
   .im.charlike.home .title {font-size: 2.5rem;}
   .im.charlike.home .short.bio {font-size: 1.050rem;}
   .im.charlike.home .short.bio .breakline.one {display: block; content: '<br>';}
   .im.charlike.home .short.bio .breakline.three {display: block; content: '<br>';}
-  .im.charlike.home .logo {width: 7rem;height: 7rem;}
 }
 @media (min-width: 38em) {
   .im.charlike.home .title {font-size: 2.750rem;}
   .im.charlike.home .short.bio {font-size: 1.100rem;}
   .im.charlike.home .short.bio .breakline.two {display: inline; content: '';}
-  .im.charlike.home .logo {width: 8rem;height: 8rem;}
 }
 @media (min-width: 48em) {
   .im.charlike.page {padding-top: 13rem;}
@@ -163,7 +159,6 @@ body {
   .im.charlike.home .short.bio .breakline.one {display: inline; content: '';}
   .im.charlike.home .short.bio .breakline.three {display: inline; content: '';}
   .im.charlike.home .short.bio .breakline.two {display: block; content: '<br>';}
-  .im.charlike.home .logo {width: 9rem;height: 9rem;}
 }
 
 /**

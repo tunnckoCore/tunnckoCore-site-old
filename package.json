@@ -16,8 +16,10 @@
     "gulp": "*",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-cssnano": "^1.1.0",
+    "gulp-htmlmin": "^1.1.4",
     "gulp-rename": "*",
     "gulp-sourcemaps": "*",
+    "html-inline": "^1.1.1",
     "uglify-js": "*"
   }
 }
