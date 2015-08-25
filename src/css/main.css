@@ -70,15 +70,12 @@ body {
 
 .im.charlike.breadcrumb {
   display: inline-block;
-  font-size: 1rem;
 }
 .im.charlike.breadcrumb .divider {
   display: inline-block;
-  font-size: 1rem;
   font-weight: bold;
   margin: 0 0.250rem;
 }
-
 .im.charlike.last.build {
   position: absolute;
   top: 1rem;
