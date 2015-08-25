@@ -26,7 +26,7 @@ gulp.task('css', function() {
 })
 
 gulp.task('html', ['inline'], function() {
-  return gulp.src('./dist/index.html')
+  return gulp.src('./dist/inlined.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'))
 })
@@ -34,7 +34,7 @@ gulp.task('html', ['inline'], function() {
 gulp.task('inline', function () {
   return fs.createReadStream(__dirname + '/index.html')
     .pipe(inliner())
-    .pipe(fs.createWriteStream('dist/index.html'))
+    .pipe(fs.createWriteStream('dist/inlined.html'))
 })
 
 
