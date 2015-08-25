@@ -10,6 +10,7 @@ var uglifyjs = require('gulp-uglify')
 var sourcemaps = require('gulp-sourcemaps')
 var autoprefixer = require('gulp-autoprefixer')
 var inliner = require('html-inline')
+var hasha = require('hash-obj')
 
 gulp
   .task('css', function () {
@@ -36,7 +37,17 @@ gulp
   .task('html', ['inline'], function () {
     return gulp.src('./dist/index.html')
       .pipe(htmlmin({collapseWhitespace: true}))
-      .pipe(insert.prepend('<!-- ' + (new Date()) + ' -->'))
+      .pipe(insert.transform(function (contents, file) {
+        var date = new Date()
+        var hash = hasha({
+          filepath: file.path,
+          contents: file.contents,
+          date: date
+        }).slice(0, 15)
+
+        file.contents = new Buffer(file.contents.toString().replace('{{hash}}', hash))
+        return '<!-- #' + hash + ' from ' + date + ' -->' + file.contents.toString()
+      }))
       .pipe(gulp.dest('dist'))
   })
   .task('inline', function () {
@@ -47,6 +58,10 @@ gulp
   .task('copy', function () {
     return fs.createReadStream(__dirname + '/dist/index.html')
       .pipe(fs.createWriteStream(__dirname + '/index.html'))
+  })
+  .task('copy-dev', function () {
+    return fs.createReadStream(__dirname + '/dist/index.html')
+      .pipe(fs.createWriteStream(__dirname + '/index-dev.html'))
   })
 
 /**
