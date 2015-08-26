@@ -17,7 +17,7 @@ gulp
     return gulp.src('src/css/*.css')
       .pipe(sourcemaps.init())
       .pipe(autoprefixer({
-        browsers: ['last 3 versions']
+        browsers: ['last 15 versions']
       }))
       .pipe(cssnano())
       .pipe(rename(function (path) {
