@@ -1,0 +1,1 @@
+{"version":3,"sources":["normalize.css"],"names":[],"mappings":"AAAA,KACE,uBAAA,AAAgB,cAAA,CACjB","file":"main.min.css","sourcesContent":[".foo {\n  transition: all;\n}"],"sourceRoot":"/source/"}

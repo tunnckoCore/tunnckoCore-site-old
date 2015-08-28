@@ -1,75 +1,76 @@
 'use strict'
 
+/**
+ * Built with PostCSS, Autprefixer
+ * cssnano, rucksack, lost
+ */
+
 var fs = require('fs')
 var gulp = require('gulp')
-var insert = require('gulp-insert')
-var rename = require('gulp-rename')
-var cssnano = require('gulp-cssnano')
-var htmlmin = require('gulp-htmlmin')
+var stylus = require('gulp-stylus')
+var concat = require('gulp-concat')
+var postcss = require('gulp-postcss')
 var uglifyjs = require('gulp-uglify')
 var sourcemaps = require('gulp-sourcemaps')
 var autoprefixer = require('gulp-autoprefixer')
+var poststylus = require('poststylus')
+var rucksack = require('gulp-rucksack')
+var cssnano = require('gulp-cssnano')
+var htmlmin = require('gulp-htmlmin')
 var inliner = require('html-inline')
-var hasha = require('hash-obj')
+var lost = require('lost')
 
-gulp
-  .task('css', function () {
-    return gulp.src('src/css/*.css')
-      .pipe(sourcemaps.init())
-      .pipe(autoprefixer({
-        browsers: ['last 15 versions']
-      }))
-      .pipe(cssnano())
-      .pipe(rename(function (path) {
-        path.extname = '.min.css'
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('dist/css'))
-  })
-  .task('js', function () {
-    gulp.src('src/js/*.js')
-      .pipe(uglifyjs())
-      .pipe(rename(function (path) {
-        path.extname = '.min.js'
-      }))
-      .pipe(gulp.dest('dist/js'))
-  })
-  .task('html', ['inline'], function () {
-    return gulp.src('./dist/index.html')
-      .pipe(htmlmin({collapseWhitespace: true}))
-      .pipe(insert.transform(function (contents, file) {
-        var date = new Date()
-        var hash = hasha({
-          filepath: file.path,
-          contents: file.contents,
-          date: date
-        }).slice(0, 15)
+var paths = {
+  js: [
+    'src/js/*.js',
+    'src/js/**/*.js'
+  ],
+  css: [
+    'src/css/*.css',
+    'src/css/**/*.css'
+  ],
+  html: [
+    'src/*.html',
+    'src/**/*.html'
+  ]
+}
 
-        file.contents = new Buffer(file.contents.toString().replace('{{hash}}', hash))
-        return '<!-- #' + hash + ' from ' + date + ' -->' + file.contents.toString()
-      }))
-      .pipe(gulp.dest('dist'))
-  })
-  .task('inline', function () {
-    return fs.createReadStream(__dirname + '/src/index.html')
-      .pipe(inliner())
-      .pipe(fs.createWriteStream('dist/index.html'))
-  })
-  .task('copy', function () {
-    return fs.createReadStream(__dirname + '/dist/index.html')
-      .pipe(fs.createWriteStream(__dirname + '/index.html'))
-  })
-  .task('copy-dev', function () {
-    return fs.createReadStream(__dirname + '/dist/index.html')
-      .pipe(fs.createWriteStream(__dirname + '/index-dev.html'))
-  })
+gulp.task('js', function () {
+  return gulp.src(paths.js)
+    .pipe(sourcemaps.init())
+    .pipe(uglifyjs())
+    .pipe(concat({path: 'main.min.js'}))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('dist/'))
+})
+gulp.task('css', function () {
+  return gulp.src(paths.css)
+    .pipe(sourcemaps.init())
+    .pipe(postcss([lost()]))
+    .pipe(rucksack())
+    .pipe(cssnano({autoprefixer: {browsers: ['last 4 versions']}}))
+    .pipe(concat({path: 'main.min.css'}))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('dist/'))
+})
+gulp.task('inline', ['js', 'css'], function (cb) {
+  return fs.createReadStream(__dirname + '/src/index.html')
+    .pipe(inliner())
+    .pipe(fs.createWriteStream('dist/index.html'))
+})
+gulp.task('html', ['inline'], function () {
+  return gulp.src('./dist/index.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'))
+})
 
-/**
- * Watch and default
- */
+// Watch
+gulp.task('watch', function (){
+  gulp.watch(paths.js, ['js'])
+  gulp.watch(paths.css, ['css'])
+  gulp.watch(paths.html, ['html'])
+})
 
-gulp
-  .task('watch', function () {
-    return gulp.watch('src/**/*', ['css', 'html', 'js'])
-  })
-  .task('default', ['css', 'js', 'html'])
+// Define cli tasks
+gulp.task('build', ['html'])
+gulp.task('default', ['html', 'watch'])
