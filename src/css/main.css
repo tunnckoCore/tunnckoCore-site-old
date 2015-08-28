@@ -1,0 +1,26 @@
+/*!
+ * Charlike Mike Reagent
+ */
+$brandColor: #f54;
+
+.brand-bg-color {
+  background: $brandColor !important;
+  background-color: $brandColor !important;
+}
+body,
+.ui.brand.menu,
+.charlike.web {
+  background-color: $brandColor !important;
+}
+.ui.brand.menu .brand.header {
+  color: #fff!important;
+}
+.ui.menu .ui.dropdown .menu>.item {
+  padding: 0;
+}
+.ui.inverted.attached.segment {
+  background-color: $brandColor !important;
+  border-color: $brandColor !important;
+  background: $brandColor !important;
+  border: 0;
+}

@@ -7,17 +7,15 @@
 
 var fs = require('fs')
 var gulp = require('gulp')
-var stylus = require('gulp-stylus')
 var concat = require('gulp-concat')
 var postcss = require('gulp-postcss')
 var uglifyjs = require('gulp-uglify')
 var sourcemaps = require('gulp-sourcemaps')
-var autoprefixer = require('gulp-autoprefixer')
-var poststylus = require('poststylus')
 var rucksack = require('gulp-rucksack')
 var cssnano = require('gulp-cssnano')
 var htmlmin = require('gulp-htmlmin')
 var inliner = require('html-inline')
+var precss = require('precss')
 var lost = require('lost')
 
 var paths = {
@@ -46,7 +44,7 @@ gulp.task('js', function () {
 gulp.task('css', function () {
   return gulp.src(paths.css)
     .pipe(sourcemaps.init())
-    .pipe(postcss([lost()]))
+    .pipe(postcss([lost(), precss()]))
     .pipe(rucksack())
     .pipe(cssnano({autoprefixer: {browsers: ['last 4 versions']}}))
     .pipe(concat({path: 'main.min.css'}))
@@ -65,9 +63,9 @@ gulp.task('html', ['inline'], function () {
 })
 
 // Watch
-gulp.task('watch', function (){
-  gulp.watch(paths.js, ['js'])
-  gulp.watch(paths.css, ['css'])
+gulp.task('watch', function () {
+  gulp.watch(paths.js, ['js', 'html'])
+  gulp.watch(paths.css, ['css', 'html'])
   gulp.watch(paths.html, ['html'])
 })
 
