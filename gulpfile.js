@@ -52,7 +52,7 @@ gulp
   })
   .task('inline', function () {
     return fs.createReadStream(__dirname + '/src/index.html')
-      // .pipe(inliner())
+      .pipe(inliner())
       .pipe(fs.createWriteStream('dist/index.html'))
   })
   .task('copy', function () {
