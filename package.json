@@ -7,6 +7,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "deploy": "surge dist/",
     "prepare": "gulp && gulp copy"
   },
   "dependencies": {},
@@ -22,6 +23,7 @@
     "gulp-sourcemaps": "*",
     "gulp-uglify": "^1.3.0",
     "hash-obj": "^1.0.0",
-    "html-inline": "^1.1.1"
+    "html-inline": "^1.1.1",
+    "surge": "^0.14.3"
   }
 }
