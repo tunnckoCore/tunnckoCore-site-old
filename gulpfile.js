@@ -34,19 +34,18 @@ gulp
       }))
       .pipe(gulp.dest('dist/js'))
   })
-  .task('html', ['inline'], function () {
-    return gulp.src('./dist/index.html')
+  .task('html', ['inline', 'not_found'], function () {
+    return gulp.src('./dist/*.html')
       .pipe(htmlmin({collapseWhitespace: true}))
       .pipe(insert.transform(function (contents, file) {
-        var date = new Date()
         var hash = hasha({
           filepath: file.path,
           contents: file.contents,
-          date: date
+          date: new Date()
         }).slice(0, 15)
 
         file.contents = new Buffer(file.contents.toString().replace('{{hash}}', hash))
-        return '<!-- #' + hash + ' from ' + date + ' -->' + file.contents.toString()
+        return file.contents.toString()
       }))
       .pipe(gulp.dest('dist'))
   })
@@ -55,14 +54,19 @@ gulp
       .pipe(inliner())
       .pipe(fs.createWriteStream('dist/index.html'))
   })
-  .task('copy', function () {
-    return fs.createReadStream(__dirname + '/dist/index.html')
-      .pipe(fs.createWriteStream(__dirname + '/index.html'))
+  .task('not_found', function () {
+    return fs.createReadStream(__dirname + '/src/404.html')
+      .pipe(inliner())
+      .pipe(fs.createWriteStream('dist/404.html'))
   })
-  .task('copy-dev', function () {
-    return fs.createReadStream(__dirname + '/dist/index.html')
-      .pipe(fs.createWriteStream(__dirname + '/index-dev.html'))
-  })
+  // .task('copy', function () {
+  //   return fs.createReadStream(__dirname + '/dist/index.html')
+  //     .pipe(fs.createWriteStream(__dirname + '/index.html'))
+  // })
+  // .task('copy-dev', function () {
+  //   return fs.createReadStream(__dirname + '/dist/index.html')
+  //     .pipe(fs.createWriteStream(__dirname + '/index-dev.html'))
+  // })
 
 /**
  * Watch and default
@@ -72,4 +76,4 @@ gulp
   .task('watch', function () {
     return gulp.watch('src/**/*', ['css', 'html', 'js'])
   })
-  .task('default', ['css', 'js', 'html'])
+  .task('default', ['css', 'html', 'js'])

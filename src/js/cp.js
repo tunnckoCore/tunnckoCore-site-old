@@ -1,7 +1,7 @@
 /* CopyPoison 3.2 | (c) 2015 MIT license | http://copypoison.com */
 (function() {
   var chars = 'ABEKMHOΠPCTXaeĸopcyxIiJjSs'+'АВЕКМНОПРСТХаекорсухІіЈјЅѕ';
-  var cfg = {length : 150, link : 'true', prefix : '', suffix : ''}, script;
+  var cfg = {length : 15, link : 'true', prefix : '', suffix : ''}, script;
 
   if(script = document.currentScript) {
     cfg.length = script.getAttribute('data-length') || cfg.length;
